@@ -29,6 +29,29 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyA9fhIr2j19riVzjApBZeM6MO_2EMOU5SY",
+        authDomain: "my-sous-chef-1cae3.firebaseapp.com",
+        projectId: "my-sous-chef-1cae3",
+        storageBucket: "my-sous-chef-1cae3.appspot.com",
+        messagingSenderId: "640918035261",
+        appId: "1:640918035261:web:bcd56b1ce1c9a781820354",
+        measurementId: "G-M20WL0H016"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
