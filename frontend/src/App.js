@@ -4,11 +4,6 @@ import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 
 function App() {
-  require('react-dom');
-window.React2 = require('react');
-console.log(window.React1 === window.React2);
-console.log(window.React1);
-console.log(window.React2);
   return (
     <div className="App">
       <header className="App-header">
