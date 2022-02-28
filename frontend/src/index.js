@@ -10,19 +10,24 @@ import Saved from './components/saved';
 import Completed from './components/completed';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './store';
+
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup/>} />
-      <Route path="search" element={<Search/>} />
-      <Route path="favs" element={<Favs/>} />
-      <Route path="saved" element={<Saved/>} />
-      <Route path="completed" element={<Completed/>} />
-    </Routes>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup/>} />
+        <Route path="search" element={<Search/>} />
+        <Route path="favs" element={<Favs/>} />
+        <Route path="saved" element={<Saved/>} />
+        <Route path="completed" element={<Completed/>} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
