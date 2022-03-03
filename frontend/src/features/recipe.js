@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import apis from './apis'
 
-export const usersSlice = createSlice({
+export const recipeSlice = createSlice({
   name: 'users',
   initialState: {
     value: 0,
@@ -13,13 +14,14 @@ export const usersSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSucceed } = usersSlice.actions
+export const { loginSucceed } = recipeSlice.actions
 
-export const login = (token) => async dispatch => {
+export const searchRecipe = (ingdts) => async dispatch => {
     try {
-      dispatch(loginSucceed(token));
+      const response = await apis.search(ingdts);
     } catch (err) {
+      console.log(err.response);
     }
   };
 
-export default usersSlice.reducer
+export default recipeSlice.reducer

@@ -1,8 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { login } from "../features/users";
 
 const provider = new GoogleAuthProvider();
 // TODO: remove this component and just add it the functionality to the home page
@@ -20,7 +18,7 @@ const firebaseConfig = {
 
 function Login () {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    
     signInWithPopup(auth, provider)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
@@ -29,7 +27,6 @@ function Login () {
       // The signed-in user info.
       const user = result.user;
       navigate('/search');
-      dispatch(login(token));
     }).catch((error) => {
       console.log(error.message);
     });
