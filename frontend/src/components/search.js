@@ -1,10 +1,12 @@
 import Header from "./common/header";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import { searchRecipe } from "../features/recipe";
+import TextField from '@mui/material/TextField';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Search = () => {
@@ -13,6 +15,8 @@ const Search = () => {
     const user = auth.currentUser;
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [ingdt, setIngdt] = useState([]);
+    const [ingdtList, setIngdtList] = useState([]);
 
     useEffect(() => {
         if (!user){
@@ -21,21 +25,35 @@ const Search = () => {
     },[navigate, user])
 
     const handleSearch = () => {
-        let arr = ['beef', 'cheese'];
-        let request = "";
-        for(let i = 0; i < arr.length; i++) {
-            request += arr[i];
-            if (i < arr.length-1) {
-                request += "%20";
+        if (ingdtList.length > 0) {
+            let request =ingdtList[0];
+            for(let i = 1; i < ingdtList.length; i++) {
+                request += "%20" + ingdtList[i];
             }
+            dispatch(searchRecipe(request));
         }
-        dispatch(searchRecipe(request));
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setIngdt("");
+        setIngdtList(ingdtList.concat(ingdt));
     }
 
     return (
         <div>
             <Header />
-            <p>Search page</p>
+            <form onSubmit={handleSubmit}>
+                <TextField
+                    id="ingdtInput"
+                    variant="outlined"
+                    label="Enter ingredients here"
+                    value={ingdt}
+                    onChange={(e) => {
+                        setIngdt(e.target.value);
+                    }}
+                />
+            </form>
             <Button variant="contained" onClick={handleSearch}>Submit</Button>
         </div>
     );
