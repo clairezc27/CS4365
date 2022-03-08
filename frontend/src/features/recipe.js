@@ -20,7 +20,7 @@ export const searchRecipe = (ingdts) => async dispatch => {
     try {
       const response = await apis.search(ingdts);
     } catch (err) {
-      console.log(err.response);
+      console.log(err.response.data.message);
     }
   };
 

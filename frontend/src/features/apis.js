@@ -7,10 +7,10 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   BASE_URL = '/apis';	
 }
 
-const SEARCH_URL = `${BASE_URL}/search-recipes`;
+const SEARCH_URL = `${BASE_URL}/search-recipe`;
 
 const search = (ingdts) => axios.post(SEARCH_URL, {
-    ingredients: ingdts,
+  ingdts: ingdts,
 });
 
 const apis = { search}

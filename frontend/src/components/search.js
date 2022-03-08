@@ -21,8 +21,15 @@ const Search = () => {
     },[navigate, user])
 
     const handleSearch = () => {
-        let arr = ['beef, cheese'];
-        dispatch(searchRecipe(arr));
+        let arr = ['beef', 'cheese'];
+        let request = "";
+        for(let i = 0; i < arr.length; i++) {
+            request += arr[i];
+            if (i < arr.length-1) {
+                request += "%20";
+            }
+        }
+        dispatch(searchRecipe(request));
     }
 
     return (
