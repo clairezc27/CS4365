@@ -11,7 +11,7 @@ import requests
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 CORS(app) #comment this on deployment
 api = Api(app)
-cred = credentials.Certificate('key.json')
+cred = credentials.Certificate('./../Downloads/key.json')
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://my-sous-chef-1cae3-default-rtdb.firebaseio.com',
