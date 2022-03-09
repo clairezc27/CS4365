@@ -11,11 +11,11 @@ import Completed from './components/completed';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from 'react-redux';
-import store from './store';
+import configureStore from './store';
 
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={configureStore()}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />

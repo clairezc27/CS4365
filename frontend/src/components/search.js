@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
-import { searchRecipe } from "../features/recipe";
+import { searchRecipe, addIngdt } from "../features/recipe";
 import TextField from '@mui/material/TextField';
-import ClearIcon from '@mui/icons-material/Clear';
+import Ingdts from "./common/ingdts";
 
 
 const Search = () => {
@@ -15,7 +15,7 @@ const Search = () => {
     const user = auth.currentUser;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [ingdt, setIngdt] = useState([]);
+    const [ingdt, setIngdt] = useState();
     const [ingdtList, setIngdtList] = useState([]);
 
     useEffect(() => {
@@ -38,6 +38,7 @@ const Search = () => {
         event.preventDefault();
         setIngdt("");
         setIngdtList(ingdtList.concat(ingdt));
+        dispatch(addIngdt(ingdt));
     }
 
     return (
@@ -55,6 +56,8 @@ const Search = () => {
                 />
             </form>
             <Button variant="contained" onClick={handleSearch}>Submit</Button>
+            <br />
+            <Ingdts />
         </div>
     );
 
