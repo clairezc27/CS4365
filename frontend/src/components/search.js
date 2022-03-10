@@ -15,7 +15,7 @@ const Search = () => {
     const user = auth.currentUser;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [ingdt, setIngdt] = useState();
+    const [ingdt, setIngdt] = useState("");
     const [ingdtList, setIngdtList] = useState([]);
 
     useEffect(() => {
