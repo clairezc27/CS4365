@@ -15,12 +15,19 @@ export const recipeSlice = createSlice({
     },
     addIngdtSucceed: (state, action) => {
       state.ingdts = [action.payload, ...state.ingdts];
+    },
+    deleteIngdtSucceed: (state, action) => {
+      for (var i = 0; i < state.ingdts.length; i++) {
+        if (state.ingdts[i] === action.payload) {
+          state.ingdts.splice(i, 1);
+        }
+      }
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSucceed, addIngdtSucceed } = recipeSlice.actions
+export const { loginSucceed, addIngdtSucceed, deleteIngdtSucceed } = recipeSlice.actions
 
 export const searchRecipe = (ingdts) => async dispatch => {
     try {
@@ -36,6 +43,14 @@ export const addIngdt = (ingdt) => async dispatch => {
     } catch (err) {
       console.log(err);
     }
+}
+
+export const deleteIngdt = (ingdt) => async dispatch => {
+  try {
+    dispatch(deleteIngdtSucceed(ingdt));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export default recipeSlice.reducer
