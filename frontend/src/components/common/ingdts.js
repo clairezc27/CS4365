@@ -8,7 +8,7 @@ const Ingdts = () => {
     return (
         <>
         {ingdts.map((ingdt, index) => (
-            <Button key={index} variant="contained" endIcon={<ClearIcon />}>
+            <Button style={{margin: "3px"}} key={index} variant="contained" endIcon={<ClearIcon />}>
                 {ingdt}
             </Button>
 

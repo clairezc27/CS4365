@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { searchRecipe, addIngdt } from "../features/recipe";
 import TextField from '@mui/material/TextField';
 import Ingdts from "./common/ingdts";
+import '../index.css';
 
 
 const Search = () => {
@@ -44,20 +45,28 @@ const Search = () => {
     return (
         <div>
             <Header />
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    id="ingdtInput"
-                    variant="outlined"
-                    label="Enter ingredients here"
-                    value={ingdt}
-                    onChange={(e) => {
-                        setIngdt(e.target.value);
-                    }}
-                />
-            </form>
-            <Button variant="contained" onClick={handleSearch}>Submit</Button>
-            <br />
-            <Ingdts />
+
+            <div className="splitScreen">
+                <div className="leftPane">
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            id="ingdtInput"
+                            variant="outlined"
+                            label="Enter ingredients here"
+                            value={ingdt}
+                            onChange={(e) => {
+                                setIngdt(e.target.value);
+                            }}
+                        />
+                    </form>
+                    <br />
+                    <Ingdts />
+
+                </div>
+                <div className="rightPane">
+                    <Button variant="contained" onClick={handleSearch}>Search Recipes</Button>
+                </div>
+            </div>
         </div>
     );
 

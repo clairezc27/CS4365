@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.splitScreen {
+  display: flex;
+  flex-direction: row;
+}
+
+.leftPane {
+  width: 30%;
+  border-right-style: solid;
+  border-color: lightgrey;
+  border-width: 2px;
+  height: 100vh;
+  padding: 10px;
+}
+
+.rightPane {
+  width: 70%;
+  padding: 10px;
+  height: 100vh;
+}
