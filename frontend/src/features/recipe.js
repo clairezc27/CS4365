@@ -3,7 +3,8 @@ import apis from './apis'
 
 const initialState = {
   ingdts: [],
-
+  cuisine: "",
+  mealType: "",
 };
 
 export const recipeSlice = createSlice({
@@ -22,12 +23,18 @@ export const recipeSlice = createSlice({
           state.ingdts.splice(i, 1);
         }
       }
-    }
+    },
+    setCuisineSucceed: (state, action) => {
+      state.cuisine = action.payload;
+    },
+    setMealTypeSucceed: (state, action) => {
+      state.mealType = action.payload;
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSucceed, addIngdtSucceed, deleteIngdtSucceed } = recipeSlice.actions
+export const { loginSucceed, addIngdtSucceed, deleteIngdtSucceed, setCuisineSucceed, setMealTypeSucceed } = recipeSlice.actions
 
 export const searchRecipe = (ingdts) => async dispatch => {
     try {
@@ -48,6 +55,22 @@ export const addIngdt = (ingdt) => async dispatch => {
 export const deleteIngdt = (ingdt) => async dispatch => {
   try {
     dispatch(deleteIngdtSucceed(ingdt));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const setCuisine = (cuisine) => async dispatch => {
+  try {
+    dispatch(setCuisineSucceed(cuisine));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const setMealType = (mealType) => async dispatch => {
+  try {
+    dispatch(setMealTypeSucceed(mealType));
   } catch (err) {
     console.log(err);
   }

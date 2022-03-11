@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { searchRecipe, addIngdt } from "../features/recipe";
 import TextField from '@mui/material/TextField';
 import Ingdts from "./common/ingdts";
+import Filter from "./common/filter";
 import '../index.css';
 
 
@@ -64,6 +65,7 @@ const Search = () => {
 
                 </div>
                 <div className="rightPane">
+                    <Filter />
                     <Button variant="contained" onClick={handleSearch}>Search Recipes</Button>
                 </div>
             </div>
