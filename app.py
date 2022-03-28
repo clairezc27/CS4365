@@ -19,11 +19,24 @@ firebase_admin.initialize_app(cred, {
 })
 
 @app.route('/apis/search-recipe', methods=['POST'])
-def store_user():
-    id = "7cd1c1c9"
-    key = "ecc4ac78af2cff499bedb3fbce0aafa1"
+def search():
+    ingdts = request.get_json()['ingdts'] 
+    url = "https://api.edamam.com/api/recipes/v2?type=public&&app_id=7cd1c1c9&app_key=ecc4ac78af2cff499bedb3fbce0aafa1&random=true&q="
+    url += ingdts
+    response = requests.get(url)
+    return response.json()
+
+@app.route('/apis/add-filters', methods=['POST'])
+def filter():
     ingdts = request.get_json()['ingdts']
-    
-    url = "https://api.edamam.com/api/recipes/v2?type=public&q=${ingdts}&app_id=${key}&app_key=${key}"
+    cuisine = request.get_json()['cuisine']
+    meal_type = request.get_json()['mealType']
+    url = "https://api.edamam.com/api/recipes/v2?type=public&&app_id=7cd1c1c9&app_key=ecc4ac78af2cff499bedb3fbce0aafa1&random=true&q="
+    url += ingdts
+
+    if cuisine != "":
+        url += "&cuisineType=" + cuisine
+    if meal_type != "":
+        url += "&mealType=" + meal_type
     response = requests.get(url)
     return response.json()

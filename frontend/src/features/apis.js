@@ -8,10 +8,17 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 
 const SEARCH_URL = `${BASE_URL}/search-recipe`;
+const FILTER_URL = `${BASE_URL}/add-filters`;
 
 const search = (ingdts) => axios.post(SEARCH_URL, {
   ingdts: ingdts,
 });
 
-const apis = { search}
+const filter = (cuisine, mealType, ingdts) => axios.post(FILTER_URL, {
+  cuisine: cuisine,
+  mealType: mealType,
+  ingdts: ingdts,
+});
+
+const apis = { search, filter}
 export default apis;

@@ -76,4 +76,19 @@ export const setMealType = (mealType) => async dispatch => {
   }
 }
 
+export const applyFilter = (cuisine, mealType, ingdts) => async dispatch => {
+  try {
+    if (cuisine !== "") {
+      dispatch(setCuisineSucceed(cuisine));
+    }
+
+    if (mealType !== "") {
+      dispatch(setMealTypeSucceed(mealType));
+    }
+    const response = await apis.filter(cuisine, mealType, ingdts);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default recipeSlice.reducer

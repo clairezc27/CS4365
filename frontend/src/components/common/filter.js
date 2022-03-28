@@ -11,14 +11,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { setCuisine, setMealType } from '../../features/recipe';
+import { useDispatch, useSelector } from 'react-redux';
+import { applyFilter } from '../../features/recipe';
 
 const Filter = () => {
   const [open, setOpen] = useState(false);
   const [cuisine, changeCuisine] = useState("");
   const [mealType, changeMealType] = useState("");
   const dispatch = useDispatch();
+  const ingdts = useSelector((state) => state.recipe.ingdts);
 
   const handleCuisineChange = (event) => {
     changeCuisine(event.target.value);
@@ -42,8 +43,13 @@ const Filter = () => {
     if (reason !== 'backdropClick') {
       setOpen(false);
     }
-    dispatch(setCuisine(cuisine));
-    dispatch(setMealType(mealType));
+    if (ingdts.length > 0) {
+        let request = ingdts[0];
+        for(let i = 1; i < ingdts.length; i++) {
+            request += "%20" + ingdts[i];
+        }
+        dispatch(applyFilter(cuisine, mealType, request));
+    }
   };
 
   return (

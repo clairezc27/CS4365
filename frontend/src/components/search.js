@@ -28,7 +28,7 @@ const Search = () => {
 
     const handleSearch = () => {
         if (ingdtList.length > 0) {
-            let request =ingdtList[0];
+            let request = ingdtList[0];
             for(let i = 1; i < ingdtList.length; i++) {
                 request += "%20" + ingdtList[i];
             }
@@ -60,13 +60,13 @@ const Search = () => {
                             }}
                         />
                     </form>
+                    <Button variant="contained" onClick={handleSearch}>Search Recipes</Button>
                     <br />
                     <Ingdts />
 
                 </div>
                 <div className="rightPane">
                     <Filter />
-                    <Button variant="contained" onClick={handleSearch}>Search Recipes</Button>
                 </div>
             </div>
         </div>
