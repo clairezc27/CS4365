@@ -22,10 +22,11 @@ const filter = (cuisine, mealType, ingdts) => axios.post(FILTER_URL, {
   ingdts: ingdts,
 });
 
-const fav = (image, url, label) => axios.post(FAV_URL, {
+const fav = (image, url, label, email) => axios.post(FAV_URL, {
   image: image,
   url: url,
   label: label,
+  email: email,
 });
 
 const login = (email) => axios.post(LOGIN_URL, {

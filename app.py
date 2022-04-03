@@ -4,6 +4,7 @@ from flask_cors import CORS #comment this on deployment
 from api.ApiHandler import HelloApiHandler
 # from firebase import Firebase
 import firebase_admin
+from firebase_admin import auth
 from firebase_admin import credentials
 from firebase_admin import firestore
 # from firebase_admin import db
@@ -71,3 +72,26 @@ def login():
     }
     db.collection(u'users').add(new_user)
     return new_user
+
+@app.route('/apis/add-fav', methods=['POST'])
+def add_fav():
+    email = request.get_json()['email']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+
+    label = request.get_json()['label']
+    image = request.get_json()['image']
+    url = request.get_json()['url']
+    data = {
+        u"label": str(label),
+        u"image": str(image),
+        u"url": str(url),
+    }
+
+    db.collection(u'favorites').document(id).collection('fav_list').add(data)
+    return data

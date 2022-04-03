@@ -113,10 +113,12 @@ export const applyFilter = (cuisine, mealType, ingdts) => async (dispatch) => {
   }
 };
 
-export const addFav = (recipe) => async (dispatch) => {
+export const addFav = (recipe, email) => async (dispatch) => {
   try {
-    console.log("add to fave: " + recipe.label);
-  } catch (err) {}
+    const response = await apis.fav(recipe.image, recipe.url, recipe.label, email);
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 export default recipeSlice.reducer;

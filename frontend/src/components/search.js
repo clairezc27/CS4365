@@ -19,7 +19,7 @@ const Search = () => {
   const [ingdt, setIngdt] = useState("");
   const [ingdtList, setIngdtList] = useState([]);
   const results = useSelector((state) => state.recipe.results);
-
+  
   useEffect(() => {
       if (!user){
       navigate("/")

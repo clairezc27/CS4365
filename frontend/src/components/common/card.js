@@ -7,13 +7,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { addFav } from "../../features/recipe";
+import { getAuth } from "firebase/auth";
 
 const RecipeCard = (props) => {
 
   const dispatch = useDispatch();
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const handleFav = () => {
-    dispatch(addFav(props.info));
+    dispatch(addFav(props.info, user.email));
   }
 
   return (
