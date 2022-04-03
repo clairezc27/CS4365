@@ -52,7 +52,6 @@ def login():
     result = db.collection(u'users').where(u'email', u'==', email).stream()
     length = len(list(result))
     if length > 0:
-        print("already exists")
         return {}
 
     ref = db.collection(u'users')
@@ -95,3 +94,29 @@ def add_fav():
 
     db.collection(u'favorites').document(id).collection('fav_list').add(data)
     return data
+
+@app.route('/apis/fetch-favs', methods=['POST'])
+def fetch_batches():
+    email = request.get_json()['email']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+    favs = db.collection(u'favorites').document(id).collection(u'fav_list').stream()
+    
+    to_ret = []
+    for doc in favs:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        to_add = {
+            "url": load["url"],
+            "image": load["image"],
+            "label": load["label"],
+        }
+        to_ret.append(to_add)
+
+    return jsonify(to_ret), 200
