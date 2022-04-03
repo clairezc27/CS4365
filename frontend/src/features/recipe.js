@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import apis from './apis'
+import { createSlice } from "@reduxjs/toolkit";
+import apis from "./apis";
 
 const initialState = {
   ingdts: [],
@@ -9,11 +9,11 @@ const initialState = {
 };
 
 export const recipeSlice = createSlice({
-  name: 'recipe',
+  name: "recipe",
   initialState,
   reducers: {
     loginSucceed: (state, action) => {
-      localStorage.setItem('currentToken', action.payload);
+      localStorage.setItem("currentToken", action.payload);
     },
     addIngdtSucceed: (state, action) => {
       state.ingdts = [action.payload, ...state.ingdts];
@@ -33,55 +33,71 @@ export const recipeSlice = createSlice({
     },
     searchRecipeSucceed: (state, action) => {
       state.results = action.payload;
-    }
+    },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { loginSucceed, addIngdtSucceed, deleteIngdtSucceed, setCuisineSucceed, setMealTypeSucceed, searchRecipeSucceed } = recipeSlice.actions
+export const {
+  loginSucceed,
+  addIngdtSucceed,
+  deleteIngdtSucceed,
+  setCuisineSucceed,
+  setMealTypeSucceed,
+  searchRecipeSucceed,
+} = recipeSlice.actions;
 
-export const searchRecipe = (ingdts) => async dispatch => {
-    try {
-      const response = await apis.search(ingdts);
-      dispatch(searchRecipeSucceed(response.data.hits));
-    } catch (err) {
-      console.log(err.response.data.message);
-    }
-  };
+export const newLogin = (email) => async (dispatch) => {
+  try {
+    const response = await apis.login(email);
+  } catch (err) {
+    console.log(err.response);
+  }
+};
 
-export const addIngdt = (ingdt) => async dispatch => {
-    try {
-      dispatch(addIngdtSucceed(ingdt));
-    } catch (err) {
-      console.log(err);
-    }
-}
+export const searchRecipe = (ingdts) => async (dispatch) => {
+  try {
+    const response = await apis.search(ingdts);
+    console.log(response.data.hits);
+    dispatch(searchRecipeSucceed(response.data.hits));
+  } catch (err) {
+    console.log(err.response.data.message);
+  }
+};
 
-export const deleteIngdt = (ingdt) => async dispatch => {
+export const addIngdt = (ingdt) => async (dispatch) => {
+  try {
+    dispatch(addIngdtSucceed(ingdt));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteIngdt = (ingdt) => async (dispatch) => {
   try {
     dispatch(deleteIngdtSucceed(ingdt));
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-export const setCuisine = (cuisine) => async dispatch => {
+export const setCuisine = (cuisine) => async (dispatch) => {
   try {
     dispatch(setCuisineSucceed(cuisine));
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-export const setMealType = (mealType) => async dispatch => {
+export const setMealType = (mealType) => async (dispatch) => {
   try {
     dispatch(setMealTypeSucceed(mealType));
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-export const applyFilter = (cuisine, mealType, ingdts) => async dispatch => {
+export const applyFilter = (cuisine, mealType, ingdts) => async (dispatch) => {
   try {
     if (cuisine !== "") {
       dispatch(setCuisineSucceed(cuisine));
@@ -95,6 +111,12 @@ export const applyFilter = (cuisine, mealType, ingdts) => async dispatch => {
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-export default recipeSlice.reducer
+export const addFav = (recipe) => async (dispatch) => {
+  try {
+    console.log("add to fave: " + recipe.label);
+  } catch (err) {}
+};
+
+export default recipeSlice.reducer;

@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { newLogin } from "../features/recipe";
+import { useDispatch } from "react-redux";
 
 const provider = new GoogleAuthProvider();
 // TODO: remove this component and just add it the functionality to the home page
@@ -18,6 +20,7 @@ const firebaseConfig = {
 
 function Login () {
     const navigate = useNavigate();
+  const dispatch = useDispatch();
     
     signInWithPopup(auth, provider)
     .then((result) => {
@@ -26,6 +29,7 @@ function Login () {
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
+      dispatch(newLogin(user.email));
       navigate('/search');
     }).catch((error) => {
       console.log(error.message);

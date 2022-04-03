@@ -74,9 +74,7 @@ const Search = () => {
               className="card"
               style={{ margin: "3px" }}
               key={index}
-              image={result.recipe.image}
-              label={result.recipe.label}
-              url={result.recipe.url}
+              info={result.recipe}
             />
           ))}
         </div>  
