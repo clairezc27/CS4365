@@ -5,6 +5,7 @@ const initialState = {
   ingdts: [],
   cuisine: "",
   mealType: "",
+  results: [],
 };
 
 export const recipeSlice = createSlice({
@@ -30,15 +31,19 @@ export const recipeSlice = createSlice({
     setMealTypeSucceed: (state, action) => {
       state.mealType = action.payload;
     },
+    searchRecipeSucceed: (state, action) => {
+      state.results = action.payload;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { loginSucceed, addIngdtSucceed, deleteIngdtSucceed, setCuisineSucceed, setMealTypeSucceed } = recipeSlice.actions
+export const { loginSucceed, addIngdtSucceed, deleteIngdtSucceed, setCuisineSucceed, setMealTypeSucceed, searchRecipeSucceed } = recipeSlice.actions
 
 export const searchRecipe = (ingdts) => async dispatch => {
     try {
       const response = await apis.search(ingdts);
+      dispatch(searchRecipeSucceed(response.data.hits));
     } catch (err) {
       console.log(err.response.data.message);
     }
@@ -86,6 +91,7 @@ export const applyFilter = (cuisine, mealType, ingdts) => async dispatch => {
       dispatch(setMealTypeSucceed(mealType));
     }
     const response = await apis.filter(cuisine, mealType, ingdts);
+    dispatch(searchRecipeSucceed(response.data.hits));
   } catch (err) {
     console.log(err);
   }

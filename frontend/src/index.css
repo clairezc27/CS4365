@@ -31,3 +31,12 @@ code {
   padding: 10px;
   height: 100vh;
 }
+
+.card {
+  margin-bottom: 10px;
+}
+
+a:link {
+  text-decoration: none;
+  color: black;
+}

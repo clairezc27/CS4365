@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { applyFilter } from '../../features/recipe';
+import "../../index.css";
 
 const Filter = () => {
   const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ const Filter = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>Filters</Button>
+      <Button style={{ marginBottom: 10}} variant="outlined" onClick={handleClickOpen}>Filters</Button>
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>Fill the form</DialogTitle>
         <DialogContent>
