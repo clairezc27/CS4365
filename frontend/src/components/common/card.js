@@ -36,26 +36,21 @@ const RecipeCard = (props) => {
       <CardMedia
         component="img"
         alt="green iguana"
-        height="140"
+        height="170"
         image={props.info.image}
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div" >
+      <CardContent style={{ paddingBottom: 0 }}>
+        <Typography style={{ marginBottom: 0 }} gutterBottom variant="h5" component="div" >
           <a href={props.info.url}>{props.info.label}</a>
         </Typography>
-        {/* <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography> */}
       </CardContent>
       <CardActions>
         <div>
-          {props.url === 'saved' ? <Button size="small" onClick={handleComplete}>Complete</Button> : <Button size="small" onClick={handleSave}>Save</Button>}
+          {props.url === 'saved' ? <Button size="small" onClick={handleComplete}>Complete</Button> : <Button size="small" onClick={handleSave}>Save for Later</Button>}
         </div>
         <div>
           {props.url === 'favs' ? <Button size="small" onClick={handleUnfav}>Unfavorite</Button> : <Button size="small" onClick={handleFav}>Favorite</Button>}
         </div>
-        
       </CardActions>
     </Card>
   );
