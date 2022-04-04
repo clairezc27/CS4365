@@ -13,6 +13,8 @@ const FAV_URL = `${BASE_URL}/add-fav`;
 const LOGIN_URL = `${BASE_URL}/login`;
 const FETCH_FAVS_URL = `${BASE_URL}/fetch-favs`;
 const UNFAV_URL = `${BASE_URL}/unfav`;
+const SAVE_URL = `${BASE_URL}/save`;
+const FETCH_SAVED_URL = `${BASE_URL}/fetch-saved`;
 
 const search = (ingdts) => axios.post(SEARCH_URL, {
   ingdts: ingdts,
@@ -44,5 +46,16 @@ const unfav = (email, label) => axios.post(UNFAV_URL, {
   label: label,
 });
 
-const apis = { search, filter, fav, login, getFavs, unfav}
+const save = (image, url, label, email) => axios.post(SAVE_URL, {
+  image: image,
+  url: url,
+  label: label,
+  email: email,
+});
+
+const getSaved = (email) => axios.post(FETCH_SAVED_URL, {
+  email: email,
+});
+
+const apis = { search, filter, fav, login, getFavs, unfav, save, getSaved}
 export default apis;

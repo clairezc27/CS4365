@@ -7,6 +7,7 @@ const initialState = {
   mealType: "",
   results: [],
   favs: [],
+  saved: [],
 };
 
 export const recipeSlice = createSlice({
@@ -37,6 +38,9 @@ export const recipeSlice = createSlice({
     },
     fetchFavsSucceed: (state, action) => {
       state.favs = action.payload;
+    },
+    fetchSavedSucceed: (state, action) => {
+      state.saved = action.payload;
     }
   },
 });
@@ -50,6 +54,7 @@ export const {
   setMealTypeSucceed,
   searchRecipeSucceed,
   fetchFavsSucceed,
+  fetchSavedSucceed,
 } = recipeSlice.actions;
 
 export const newLogin = (email) => async (dispatch) => {
@@ -143,4 +148,22 @@ export const unfav = (email, label) => async (dispatch) => {
     console.log(err);
   }
 }
+
+export const addSaved = (recipe, email) => async (dispatch) => {
+  try {
+    const response = await apis.save(recipe.image, recipe.url, recipe.label, email);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getSaved = (email) => async (dispatch) => {
+  try {
+    const response = await apis.getSaved(email);
+    dispatch(fetchSavedSucceed(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default recipeSlice.reducer;

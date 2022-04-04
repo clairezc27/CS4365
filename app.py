@@ -151,3 +151,52 @@ def unfav():
     
     db.collection(u'favorites').document(id).collection(u'fav_list').document(target).delete()
     return jsonify(to_ret), 200
+
+@app.route('/apis/save', methods=['POST'])
+def save():
+    email = request.get_json()['email']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+
+    label = request.get_json()['label']
+    image = request.get_json()['image']
+    url = request.get_json()['url']
+    data = {
+        u"label": str(label),
+        u"image": str(image),
+        u"url": str(url),
+    }
+
+    db.collection(u'saved').document(id).collection('save_list').add(data)
+    return data
+
+@app.route('/apis/fetch-saved', methods=['POST'])
+def fetch_saved():
+    email = request.get_json()['email']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+    favs = db.collection(u'saved').document(id).collection(u'save_list').stream()
+    
+    to_ret = []
+    for doc in favs:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        to_add = {
+            "url": load["url"],
+            "image": load["image"],
+            "label": load["label"],
+        }
+        to_ret.append(to_add)
+
+    return jsonify(to_ret), 200
