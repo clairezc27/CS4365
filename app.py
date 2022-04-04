@@ -200,3 +200,71 @@ def fetch_saved():
         to_ret.append(to_add)
 
     return jsonify(to_ret), 200
+
+
+@app.route('/apis/complete', methods=['POST'])
+def complete():
+    email = request.get_json()['email']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+
+    label = request.get_json()['label']
+    image = request.get_json()['image']
+    url = request.get_json()['url']
+    data = {
+        u"label": str(label),
+        u"image": str(image),
+        u"url": str(url),
+    }
+    db.collection(u'completed').document(id).collection('complete_list').add(data)
+
+    saved = db.collection(u'saved').document(id).collection(u'save_list').stream()
+    target = ""
+    to_ret = []
+    for doc in saved:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        if load["label"] == label:
+            target = doc.id
+        else:
+            to_add = {
+                "url": load["url"],
+                "image": load["image"],
+                "label": load["label"],
+            }
+            to_ret.append(to_add)
+    
+    db.collection(u'saved').document(id).collection(u'save_list').document(target).delete()
+    return jsonify(to_ret), 200
+
+@app.route('/apis/fetch-completed', methods=['POST'])
+def fetch_completed():
+    email = request.get_json()['email']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+    favs = db.collection(u'completed').document(id).collection(u'complete_list').stream()
+    
+    to_ret = []
+    for doc in favs:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        to_add = {
+            "url": load["url"],
+            "image": load["image"],
+            "label": load["label"],
+        }
+        to_ret.append(to_add)
+
+    return jsonify(to_ret), 200

@@ -8,6 +8,7 @@ const initialState = {
   results: [],
   favs: [],
   saved: [],
+  completed: [],
 };
 
 export const recipeSlice = createSlice({
@@ -41,6 +42,9 @@ export const recipeSlice = createSlice({
     },
     fetchSavedSucceed: (state, action) => {
       state.saved = action.payload;
+    },
+    fetchCompletedSucceed: (state, action) => {
+      state.completed = action.payload;
     }
   },
 });
@@ -55,6 +59,7 @@ export const {
   searchRecipeSucceed,
   fetchFavsSucceed,
   fetchSavedSucceed,
+  fetchCompletedSucceed,
 } = recipeSlice.actions;
 
 export const newLogin = (email) => async (dispatch) => {
@@ -165,5 +170,23 @@ export const getSaved = (email) => async (dispatch) => {
     console.log(err);
   }
 }
+
+export const complete = (recipe, email) => async (dispatch) => {
+  try {
+    const response = await apis.complete(recipe.image, recipe.url, recipe.label, email);
+    dispatch(fetchSavedSucceed(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getComplete = (email) => async (dispatch) => {
+  try {
+    const response = await apis.getCompleted(email);
+    dispatch(fetchCompletedSucceed(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export default recipeSlice.reducer;
