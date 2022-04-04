@@ -38,7 +38,10 @@ const RecipeCard = (props) => {
       </CardContent>
       <CardActions>
         <Button size="small">Save</Button>
-        <Button size="small" onClick={handleFav}>Favorite</Button>
+        <div>
+          {props.url === 'favs' ? <Button size="small">Unfavorite</Button> : <Button size="small" onClick={handleFav}>Favorite</Button>}
+        </div>
+        
       </CardActions>
     </Card>
   );
