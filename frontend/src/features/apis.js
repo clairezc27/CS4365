@@ -12,6 +12,7 @@ const FILTER_URL = `${BASE_URL}/add-filters`;
 const FAV_URL = `${BASE_URL}/add-fav`;
 const LOGIN_URL = `${BASE_URL}/login`;
 const FETCH_FAVS_URL = `${BASE_URL}/fetch-favs`;
+const UNFAV_URL = `${BASE_URL}/unfav`;
 
 const search = (ingdts) => axios.post(SEARCH_URL, {
   ingdts: ingdts,
@@ -36,7 +37,12 @@ const login = (email) => axios.post(LOGIN_URL, {
 
 const getFavs = (email) => axios.post(FETCH_FAVS_URL, {
   email: email,
-})
+});
 
-const apis = { search, filter, fav, login, getFavs}
+const unfav = (email, label) => axios.post(UNFAV_URL, {
+  email: email,
+  label: label,
+});
+
+const apis = { search, filter, fav, login, getFavs, unfav}
 export default apis;

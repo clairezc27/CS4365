@@ -63,7 +63,6 @@ def login():
         response = response.replace("\'", "\"")
         load = json.loads(response)
         id = int(load["id"]) + 1
-    print(id)
     
     new_user = {
         u"email": email,
@@ -96,7 +95,7 @@ def add_fav():
     return data
 
 @app.route('/apis/fetch-favs', methods=['POST'])
-def fetch_batches():
+def fetch_favs():
     email = request.get_json()['email']
     result = db.collection(u'users').where(u'email', u'==', email).stream()
     id = -1
@@ -119,4 +118,36 @@ def fetch_batches():
         }
         to_ret.append(to_add)
 
+    return jsonify(to_ret), 200
+
+@app.route('/apis/unfav', methods=['POST'])
+def unfav():
+    email = request.get_json()['email']
+    label = request.get_json()['label']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+    favs = db.collection(u'favorites').document(id).collection(u'fav_list').stream()
+    
+    target = ""
+    to_ret = []
+    for doc in favs:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        if load["label"] == label:
+            target = doc.id
+        else:
+            to_add = {
+                "url": load["url"],
+                "image": load["image"],
+                "label": load["label"],
+            }
+            to_ret.append(to_add)
+    
+    db.collection(u'favorites').document(id).collection(u'fav_list').document(target).delete()
     return jsonify(to_ret), 200

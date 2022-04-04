@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
-import { addFav } from "../../features/recipe";
+import { addFav, unfav } from "../../features/recipe";
 import { getAuth } from "firebase/auth";
 
 const RecipeCard = (props) => {
@@ -17,6 +17,10 @@ const RecipeCard = (props) => {
 
   const handleFav = () => {
     dispatch(addFav(props.info, user.email));
+  }
+
+  const handleUnfav = () => {
+    dispatch(unfav(user.email, props.info.label));
   }
 
   return (
@@ -39,7 +43,7 @@ const RecipeCard = (props) => {
       <CardActions>
         <Button size="small">Save</Button>
         <div>
-          {props.url === 'favs' ? <Button size="small">Unfavorite</Button> : <Button size="small" onClick={handleFav}>Favorite</Button>}
+          {props.url === 'favs' ? <Button size="small" onClick={handleUnfav}>Unfavorite</Button> : <Button size="small" onClick={handleFav}>Favorite</Button>}
         </div>
         
       </CardActions>

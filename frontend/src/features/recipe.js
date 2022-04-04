@@ -122,7 +122,7 @@ export const addFav = (recipe, email) => async (dispatch) => {
   try {
     const response = await apis.fav(recipe.image, recipe.url, recipe.label, email);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
@@ -135,4 +135,12 @@ export const getFavs = (email) => async (dispatch) => {
   }
 }
 
+export const unfav = (email, label) => async (dispatch) => {
+  try {
+    const response = await apis.unfav(email, label);
+    dispatch(fetchFavsSucceed(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+}
 export default recipeSlice.reducer;
