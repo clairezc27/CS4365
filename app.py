@@ -2,12 +2,10 @@ from flask import Flask, send_from_directory, request, jsonify
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS #comment this on deployment
 from api.ApiHandler import HelloApiHandler
-# from firebase import Firebase
 import firebase_admin
 from firebase_admin import auth
 from firebase_admin import credentials
 from firebase_admin import firestore
-# from firebase_admin import db
 import requests
 import json
 
@@ -36,6 +34,8 @@ def filter():
     ingdts = request.get_json()['ingdts']
     cuisine = request.get_json()['cuisine']
     meal_type = request.get_json()['mealType']
+    diet = request.get_json()['diet']
+    health = request.get_json()['health']
     url = "https://api.edamam.com/api/recipes/v2?type=public&&app_id=7cd1c1c9&app_key=ecc4ac78af2cff499bedb3fbce0aafa1&random=true&q="
     url += ingdts
 
@@ -43,6 +43,10 @@ def filter():
         url += "&cuisineType=" + cuisine
     if meal_type != "":
         url += "&mealType=" + meal_type
+    if diet != "":
+        url +="&diet=" + diet
+    if health != "":
+        url +="&health=" + health
     response = requests.get(url)
     return response.json()
 

@@ -23,9 +23,11 @@ const search = (ingdts) => axios.post(SEARCH_URL, {
   ingdts: ingdts,
 });
 
-const filter = (cuisine, mealType, ingdts) => axios.post(FILTER_URL, {
+const filter = (cuisine, mealType, diet, health, ingdts) => axios.post(FILTER_URL, {
   cuisine: cuisine,
   mealType: mealType,
+  diet: diet,
+  health: health,
   ingdts: ingdts,
 });
 

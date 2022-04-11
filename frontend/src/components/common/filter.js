@@ -19,6 +19,8 @@ const Filter = () => {
   const [open, setOpen] = useState(false);
   const [cuisine, changeCuisine] = useState("");
   const [mealType, changeMealType] = useState("");
+  const [diet, changeDiet] = useState("");
+  const [health, changeHealth] = useState("");
   const dispatch = useDispatch();
   const ingdts = useSelector((state) => state.recipe.ingdts);
 
@@ -29,6 +31,14 @@ const Filter = () => {
   const handleTypeChange = (event) => {
     changeMealType(event.target.value);
   };
+
+  const handleDietChange = (event) => {
+    changeDiet(event.target.value)
+  }
+
+  const handleHealthChange = (event) => {
+    changeHealth(event.target.value)
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,7 +59,7 @@ const Filter = () => {
         for(let i = 1; i < ingdts.length; i++) {
             request += "%20" + ingdts[i];
         }
-        dispatch(applyFilter(cuisine, mealType, request));
+        dispatch(applyFilter(cuisine, mealType, diet, health, request));
     }
   };
 
@@ -93,6 +103,44 @@ const Filter = () => {
                 <MenuItem value="Lunch">Lunch</MenuItem>
                 <MenuItem value="Dinner">Dinner</MenuItem>
                 <MenuItem value="Dessert">Dessert</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel htmlFor="demo-dialog-native">Diet</InputLabel>
+              <Select
+                labelId="demo-dialog-label"
+                id="demo-dialog"
+                value={diet}
+                onChange={handleDietChange}
+                input={<OutlinedInput label="Diet" id="demo-dialog-native" />}
+              >
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value="balanced">Balanced</MenuItem>
+                <MenuItem value="high-fiber">High-fiber</MenuItem>
+                <MenuItem value="high-protein">High-protein</MenuItem>
+                <MenuItem value="low-carb">Low-carb</MenuItem>
+                <MenuItem value="low-fat">Low-fat</MenuItem>
+                <MenuItem value="low-sodium">Low-sodium</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel htmlFor="demo-dialog-native">Health</InputLabel>
+              <Select
+                labelId="demo-dialog-label"
+                id="demo-dialog"
+                value={health}
+                onChange={handleHealthChange}
+                input={<OutlinedInput label="Health" id="demo-dialog-native" />}
+              >
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value="fairy-free">Dairy Free</MenuItem>
+                <MenuItem value="gluten-free">Gluten Free</MenuItem>
+                <MenuItem value="keto-friendly">Keto</MenuItem>
+                <MenuItem value="kosher">Kosher</MenuItem>
+                <MenuItem value="paleo">Paleo</MenuItem>
+                <MenuItem value="pescatarian">Pescatarian</MenuItem>
+                <MenuItem value="vegan">Vegan</MenuItem>
+                <MenuItem value="vegetarian">Vegetarian</MenuItem>
               </Select>
             </FormControl>
           </Box>

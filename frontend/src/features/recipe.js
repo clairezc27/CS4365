@@ -3,8 +3,6 @@ import apis from "./apis";
 
 const initialState = {
   ingdts: [],
-  cuisine: "",
-  mealType: "",
   results: [],
   favs: [],
   saved: [],
@@ -28,12 +26,6 @@ export const recipeSlice = createSlice({
         }
       }
     },
-    setCuisineSucceed: (state, action) => {
-      state.cuisine = action.payload;
-    },
-    setMealTypeSucceed: (state, action) => {
-      state.mealType = action.payload;
-    },
     searchRecipeSucceed: (state, action) => {
       state.results = action.payload;
     },
@@ -54,8 +46,6 @@ export const {
   loginSucceed,
   addIngdtSucceed,
   deleteIngdtSucceed,
-  setCuisineSucceed,
-  setMealTypeSucceed,
   searchRecipeSucceed,
   fetchFavsSucceed,
   fetchSavedSucceed,
@@ -96,32 +86,9 @@ export const deleteIngdt = (ingdt) => async (dispatch) => {
   }
 };
 
-export const setCuisine = (cuisine) => async (dispatch) => {
+export const applyFilter = (cuisine, mealType, diet, health, ingdts) => async (dispatch) => {
   try {
-    dispatch(setCuisineSucceed(cuisine));
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const setMealType = (mealType) => async (dispatch) => {
-  try {
-    dispatch(setMealTypeSucceed(mealType));
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const applyFilter = (cuisine, mealType, ingdts) => async (dispatch) => {
-  try {
-    if (cuisine !== "") {
-      dispatch(setCuisineSucceed(cuisine));
-    }
-
-    if (mealType !== "") {
-      dispatch(setMealTypeSucceed(mealType));
-    }
-    const response = await apis.filter(cuisine, mealType, ingdts);
+    const response = await apis.filter(cuisine, mealType, diet, health, ingdts);
     dispatch(searchRecipeSucceed(response.data.hits));
   } catch (err) {
     console.log(err);
