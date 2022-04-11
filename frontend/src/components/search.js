@@ -3,8 +3,7 @@ import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "@mui/material/Button";
-import { searchRecipe, addIngdt } from "../features/recipe";
+import { addIngdt } from "../features/recipe";
 import TextField from "@mui/material/TextField";
 import Ingdts from "./common/ingdts";
 import Filter from "./common/filter";
@@ -26,16 +25,6 @@ const Search = () => {
       }
   },[navigate, user])
 
-  const handleSearch = () => {
-    if (ingdtList.length > 0) {
-      let request = ingdtList[0];
-      for (let i = 1; i < ingdtList.length; i++) {
-        request += "%20" + ingdtList[i];
-      }
-      dispatch(searchRecipe(request));
-    }
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setIngdt("");
@@ -49,20 +38,20 @@ const Search = () => {
 
       <div className="splitScreen">
         <div className="leftPane">
-          <form onSubmit={handleSubmit}>
-            <TextField
-              id="ingdtInput"
-              variant="outlined"
-              label="Enter ingredients here"
-              value={ingdt}
-              onChange={(e) => {
-                setIngdt(e.target.value);
-              }}
-            />
-          </form>
-          <Button variant="contained" onClick={handleSearch}>
-            Search Recipes
-          </Button>
+          <div className="search">
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                id="ingdtInput"
+                variant="outlined"
+                label="Enter ingredients here"
+                value={ingdt}
+                onChange={(e) => {
+                  setIngdt(e.target.value);
+                }}
+              />
+            </form>
+          </div>
           <br />
           <Ingdts />
         </div>
