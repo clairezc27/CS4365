@@ -268,3 +268,36 @@ def fetch_completed():
         to_ret.append(to_add)
 
     return jsonify(to_ret), 200
+
+
+@app.route('/apis/unsave', methods=['POST'])
+def unsave():
+    email = request.get_json()['email']
+    label = request.get_json()['label']
+    result = db.collection(u'users').where(u'email', u'==', email).stream()
+    id = -1
+    for doc in result:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        id = str(int(load["id"]))
+    favs = db.collection(u'saved').document(id).collection(u'save_list').stream()
+    
+    target = ""
+    to_ret = []
+    for doc in favs:
+        response = str(doc.to_dict())
+        response = response.replace("\'", "\"")
+        load = json.loads(response)
+        if load["label"] == label:
+            target = doc.id
+        else:
+            to_add = {
+                "url": load["url"],
+                "image": load["image"],
+                "label": load["label"],
+            }
+            to_ret.append(to_add)
+    
+    db.collection(u'saved').document(id).collection(u'save_list').document(target).delete()
+    return jsonify(to_ret), 200

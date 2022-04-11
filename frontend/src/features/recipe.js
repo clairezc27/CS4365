@@ -171,6 +171,15 @@ export const getSaved = (email) => async (dispatch) => {
   }
 }
 
+export const unsave = (email, label) => async (dispatch) => {
+  try {
+    const response = await apis.unsave(email, label);
+    dispatch(fetchSavedSucceed(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export const complete = (recipe, email) => async (dispatch) => {
   try {
     const response = await apis.complete(recipe.image, recipe.url, recipe.label, email);

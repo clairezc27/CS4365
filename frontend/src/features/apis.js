@@ -17,6 +17,7 @@ const SAVE_URL = `${BASE_URL}/save`;
 const FETCH_SAVED_URL = `${BASE_URL}/fetch-saved`;
 const COMPLETE_URL = `${BASE_URL}/complete`;
 const FETCH_COMPLETED_URL = `${BASE_URL}/fetch-completed`;
+const UNSAVE_URL = `${BASE_URL}/unsave`;
 
 const search = (ingdts) => axios.post(SEARCH_URL, {
   ingdts: ingdts,
@@ -48,6 +49,11 @@ const unfav = (email, label) => axios.post(UNFAV_URL, {
   label: label,
 });
 
+const unsave = (email, label) => axios.post(UNSAVE_URL, {
+  email: email,
+  label: label,
+})
+
 const save = (image, url, label, email) => axios.post(SAVE_URL, {
   image: image,
   url: url,
@@ -70,5 +76,5 @@ const getCompleted = (email) => axios.post(FETCH_COMPLETED_URL, {
   email: email,
 });
 
-const apis = { search, filter, fav, login, getFavs, unfav, save, getSaved, complete, getCompleted}
+const apis = { search, filter, fav, login, getFavs, unfav, save, getSaved, complete, getCompleted, unsave}
 export default apis;
