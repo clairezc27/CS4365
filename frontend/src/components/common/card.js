@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { addFav, unfav, addSaved, complete } from "../../features/recipe";
 import { getAuth } from "firebase/auth";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const RecipeCard = (props) => {
 
@@ -41,7 +42,10 @@ const RecipeCard = (props) => {
       />
       <CardContent style={{ paddingBottom: 0 }}>
         <Typography style={{ marginBottom: 0 }} gutterBottom variant="h5" component="div" >
-          <a href={props.info.url}>{props.info.label}</a>
+          <a href={props.info.url} target="_blank" rel="noreferrer noopener">
+            {props.info.label}
+            <OpenInNewIcon />
+          </a>
         </Typography>
       </CardContent>
       <CardActions>
