@@ -5,14 +5,14 @@ import firebase_admin
 from firebase_admin import auth
 from firebase_admin import credentials
 from firebase_admin import firestore
+from flask import Flask, send_from_directory, request, jsonify
 
+# cred = credentials.Certificate('./../Downloads/key.json')
 
-cred = credentials.Certificate('./../Downloads/key.json')
-
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://my-sous-chef-test-1cae3-default-rtdb.firebaseio.com',
-    'databaseAuthVariableOverride': None
-})
+# firebase_admin.initialize_app(cred, {
+#     'databaseURL': 'https://my-sous-chef-test-1cae3-default-rtdb.firebaseio.com',
+#     'databaseAuthVariableOverride': None
+# })
 
 db = firestore.client()
 
@@ -103,7 +103,6 @@ headers = {
     'Accept': 'application/json'
 }
 
-@responses.activate
 def test_login():
     payload = dumps({
         'email': user1['email']
@@ -112,7 +111,6 @@ def test_login():
     assert resp.status_code == 200
     assert resp == user1
 
-@responses.activate
 def test_add_fav():
     payload = dumps({
         'email': user1['email'],
@@ -124,7 +122,6 @@ def test_add_fav():
     assert resp.status_code == 200
     assert resp == recipe1
 
-@responses.activate
 def test_fetch_favs():
     db.collection(u'favorites').document(user1['id']).collection('fav_list').add(recipe2)
     db.collection(u'favorites').document(user1['id']).collection('fav_list').add(recipe3)
@@ -135,7 +132,6 @@ def test_fetch_favs():
     assert resp.status_code == 200
     assert resp == [recipe1, recipe2, recipe3]
 
-@responses.activate
 def test_unfav():
     payload = dumps({
         'email': user1['email'],
@@ -147,7 +143,6 @@ def test_unfav():
     assert resp.status_code == 200
     assert resp == [recipe2, recipe3]
 
-@responses.activate
 def test_search():
     payload = dumps({
         'ingdts': ['beef', 'onion', 'cheese'],
@@ -155,7 +150,6 @@ def test_search():
     resp = requests.post(url=SEARCH_URL, data=payload, headers=headers)
     assert resp.status_code == 200
 
-@responses.activate
 def test_filter():
     payload = dumps({
         'ingdts': ['beef', 'onion', 'pepper'],
@@ -167,7 +161,6 @@ def test_filter():
     resp = requests.post(url=SEARCH_URL, data=payload, headers=headers)
     assert resp.status_code == 200
 
-@responses.activate
 def test_save():
     payload = dumps({
         'email': user1['email'],
@@ -179,7 +172,6 @@ def test_save():
     assert resp.status_code == 200
     assert resp == recipe4
 
-@responses.activate
 def test_fetch_saved():
     db.collection(u'saved').document(user1['id']).collection('save_list').add(recipe5)
     db.collection(u'saved').document(user1['id']).collection('save_list').add(recipe6)
@@ -190,7 +182,6 @@ def test_fetch_saved():
     assert resp.status_code == 200
     assert resp == [recipe4, recipe5, recipe6]
 
-@responses.activate
 def test_unsave():
     payload = dumps({
         'email': user1['email'],
@@ -202,8 +193,6 @@ def test_unsave():
     assert resp.status_code == 200
     assert resp == [recipe4, recipe6]
 
-
-@responses.activate
 def test_complete():
     payload = dumps({
         'email': user1['email'],
@@ -215,7 +204,6 @@ def test_complete():
     assert resp.status_code == 200
     assert resp == recipe7
 
-@responses.activate
 def test_fetch_complete():
     db.collection(u'completed').document(user1['id']).collection('complete_list').add(recipe8)
     db.collection(u'completed').document(user1['id']).collection('complete_list').add(recipe9)
