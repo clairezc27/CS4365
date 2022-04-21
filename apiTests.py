@@ -7,30 +7,12 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask, send_from_directory, request, jsonify
 
-# cred = credentials.Certificate('./../Downloads/key.json')
-
-# firebase_admin.initialize_app(cred, {
-#     'databaseURL': 'https://my-sous-chef-test-1cae3-default-rtdb.firebaseio.com',
-#     'databaseAuthVariableOverride': None
-# })
-
 db = firestore.client()
 
 user1 = {
     u"email": "claire@gmail.com",
     u"id": 0,
 }
-user2 = {
-    u"email": "rachel@gmail.com",
-    u"id": 1,
-}
-user3 = {
-    u"email": "emma@gmail.com",
-    u"id": 2,
-}
-db.collection(u'users').add(user1)
-db.collection(u'users').add(user2)
-db.collection(u'users').add(user3)
 
 recipe1 = {
     u"label": "Salmon",
